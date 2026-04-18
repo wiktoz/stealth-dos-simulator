@@ -1,1 +1,38 @@
 # infra
+version: "3.9"
+
+services:
+  slowloris:
+    build:
+      context: ./traffic/attackers/slowloris
+      dockerfile: Dockerfile
+    container_name: slowloris
+#    ports:
+#      - "8000:8000"
+
+  rudy:
+    build:
+      context: ./traffic/attackers/RUDY
+      dockerfile: Dockerfile
+    container_name: rudy
+
+  shrew:
+    build:
+      context: ./traffic/attackers/shrew
+      dockerfile: Dockerfile
+    container_name: shrew
+
+  locust:
+    build:
+      context: ./traffic/background
+      dockerfile: Dockerfile
+    container_name: locust
+    ports:
+      - "8089:8089"
+    command: -f locustfile.py --host=http://target_env:8000
+
+  manager:
+    build:
+      context: ./traffic/manager
+      dockerfile: Dockerfile
+    container_name: manager
