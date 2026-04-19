@@ -13,6 +13,6 @@ members = [
     "traffic/background",
     "traffic/manager",
     "traffic/attackers/RUDY",
-    "traffic/attackers/slowloris",
     "traffic/attackers/shrew",
+    "traffic/attackers/slowloris-attack",
 ]

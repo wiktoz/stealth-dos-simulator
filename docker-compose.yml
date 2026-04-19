@@ -2,11 +2,11 @@
 version: "3.9"
 
 services:
-  slowloris:
-    build:
-      context: ./traffic/attackers/slowloris
-      dockerfile: Dockerfile
-    container_name: slowloris
+#  slowloris:
+#    build:
+#      context: ./traffic/attackers/slowloris
+#      dockerfile: Dockerfile
+#    container_name: slowloris
 #    ports:
 #      - "8000:8000"
 
@@ -36,3 +36,9 @@ services:
       context: ./traffic/manager
       dockerfile: Dockerfile
     container_name: manager
+
+  slowhttptest:
+    build:
+      context: ./traffic/attackers/slowhttptest
+      dockerfile: Dockerfile
+    container_name: slowhttptest
