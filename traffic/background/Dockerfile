@@ -1,7 +1,9 @@
 FROM locustio/locust
 
-WORKDIR /mnt/locust
-COPY requirements.txt .
-COPY src/ .
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-RUN pip install --no-cache-dir -r requirements.txt
+WORKDIR /mnt/locust
+COPY src/ .
+COPY pyproject.toml .
+
+RUN uv sync

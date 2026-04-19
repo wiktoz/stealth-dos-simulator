@@ -1,9 +1,11 @@
 FROM python:3.12
 
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
 WORKDIR /src
-COPY requirements.txt .
 COPY src/ .
+COPY pyproject.toml .
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN uv sync
 
-CMD [ "python", "main.py" ]
+CMD [ "uv", "run", "main.py" ]

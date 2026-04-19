@@ -9,5 +9,10 @@ dependencies = []
 [tool.uv.workspace]
 members = [
     "target_env",
-    "ml_pipeline"
+    "ml_pipeline",
+    "traffic/background",
+    "traffic/manager",
+    "traffic/attackers/RUDY",
+    "traffic/attackers/slowloris",
+    "traffic/attackers/shrew",
 ]
