@@ -2,43 +2,77 @@
 version: "3.9"
 
 services:
-#  slowloris:
-#    build:
-#      context: ./traffic/attackers/slowloris
-#      dockerfile: Dockerfile
-#    container_name: slowloris
-#    ports:
-#      - "8000:8000"
-
-  rudy:
-    build:
-      context: ./traffic/attackers/RUDY
-      dockerfile: Dockerfile
-    container_name: rudy
-
-  shrew:
-    build:
-      context: ./traffic/attackers/shrew
-      dockerfile: Dockerfile
-    container_name: shrew
-
+  # traffic
   locust:
     build:
       context: ./traffic/background
       dockerfile: Dockerfile
     container_name: locust
+    networks:
+      dosnet:
+        ipv4_address: 172.30.0.10
     ports:
       - "8089:8089"
-    command: -f locustfile.py --host=http://target_env:8000
+    command: -f locustfile.py --host=http://target_nginx:80
 
   manager:
     build:
       context: ./traffic/manager
       dockerfile: Dockerfile
     container_name: manager
+    networks:
+      dosnet:
+        ipv4_address: 172.30.0.20
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
-  slowhttptest:
-    build:
-      context: ./traffic/attackers/slowhttptest
-      dockerfile: Dockerfile
-    container_name: slowhttptest
+  # target_env
+
+  backend_app:
+    build: ./target_env/backend
+    container_name: target_flask
+    networks:
+      dosnet:
+        ipv4_address: 172.30.0.30
+    expose:
+      - "8080"
+    restart: always
+
+  web_server:
+    image: nginx:latest
+    container_name: target_nginx
+    networks:
+      dosnet:
+        ipv4_address: 172.30.0.40
+    ports:
+      - "80:80"
+    volumes:
+      - ./target_env/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend_app
+    restart: always
+
+  sniffer:
+    image: nicolaka/netshoot
+    container_name: sniffer
+    depends_on:
+      - web_server
+    command: >
+      sh -c "
+      apk add --no-cache tcpdump &&
+      tcpdump -i any 
+      -G 60 
+      -w /data/capture-%Y%m%d-%H%M%S.pcap
+      "
+    volumes:
+      - ./captures:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    network_mode: "container:target_nginx"
+    privileged: true
+
+networks:
+  dosnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16

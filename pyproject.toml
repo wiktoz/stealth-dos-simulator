@@ -4,7 +4,9 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "docker>=7.1.0",
+]
 
 [tool.uv.workspace]
 members = [
@@ -12,7 +14,4 @@ members = [
     "ml_pipeline",
     "traffic/background",
     "traffic/manager",
-    "traffic/attackers/RUDY",
-    "traffic/attackers/shrew",
-    "traffic/attackers/slowloris-attack",
 ]
