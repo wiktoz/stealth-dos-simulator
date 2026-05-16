@@ -50,7 +50,9 @@ def process_subfolder(folder_path):
     dfs = [conn]
 
     # optional enrichment logs
-    for log_name in ["http.log", "dns.log", "ssl.log"]:
+    # enrichment_logs = ["http.log", "dns.log", "ssl.log"]
+    enrichment_logs = ["http.log"]
+    for log_name in enrichment_logs:
 
         df = load_log(folder_path, log_name)
 
