@@ -1,0 +1,105 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="Eslint" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="absl-py" />
+          <option value="aiohappyeyeballs" />
+          <option value="aiohttp" />
+          <option value="aiosignal" />
+          <option value="anyascii" />
+          <option value="argostranslate" />
+          <option value="astunparse" />
+          <option value="async-generator" />
+          <option value="audioread" />
+          <option value="Automat" />
+          <option value="bs4" />
+          <option value="certipy" />
+          <option value="constantly" />
+          <option value="contractions" />
+          <option value="crochet" />
+          <option value="ctranslate2" />
+          <option value="deep-translator" />
+          <option value="filelock" />
+          <option value="findspark" />
+          <option value="flatbuffers" />
+          <option value="frozenlist" />
+          <option value="funcy" />
+          <option value="gast" />
+          <option value="gensim" />
+          <option value="google-pasta" />
+          <option value="h5py" />
+          <option value="html5lib" />
+          <option value="hyperlink" />
+          <option value="imbalanced-learn" />
+          <option value="imblearn" />
+          <option value="imutils" />
+          <option value="incremental" />
+          <option value="ipython-genutils" />
+          <option value="jupyterlab_latex" />
+          <option value="keras" />
+          <option value="libclang" />
+          <option value="librosa" />
+          <option value="llvmlite" />
+          <option value="mailbox" />
+          <option value="Markdown" />
+          <option value="markdown-it-py" />
+          <option value="mdurl" />
+          <option value="ml-dtypes" />
+          <option value="multidict" />
+          <option value="munkres" />
+          <option value="namex" />
+          <option value="nltk" />
+          <option value="opencv-python" />
+          <option value="opt_einsum" />
+          <option value="optree" />
+          <option value="plotly" />
+          <option value="pooch" />
+          <option value="propcache" />
+          <option value="protobuf" />
+          <option value="pyahocorasick" />
+          <option value="pyarrow" />
+          <option value="pycurl" />
+          <option value="pydot" />
+          <option value="pyLDAvis" />
+          <option value="regex" />
+          <option value="requests" />
+          <option value="rich" />
+          <option value="sacremoses" />
+          <option value="scikit-learn" />
+          <option value="sentencepiece" />
+          <option value="smart-open" />
+          <option value="soundfile" />
+          <option value="soxr" />
+          <option value="stanza" />
+          <option value="sympy" />
+          <option value="tenacity" />
+          <option value="tensorboard" />
+          <option value="tensorboard-data-server" />
+          <option value="tensorflow" />
+          <option value="tensorflow-io-gcs-filesystem" />
+          <option value="textblob" />
+          <option value="textsearch" />
+          <option value="textwrap3" />
+          <option value="torch" />
+          <option value="triton" />
+          <option value="Twisted" />
+          <option value="user-agent" />
+          <option value="vt-py" />
+          <option value="watchdog" />
+          <option value="Werkzeug" />
+          <option value="wordcloud" />
+          <option value="wrapt" />
+          <option value="xgboost" />
+          <option value="yarl" />
+          <option value="zat" />
+          <option value="zope.interface" />
+          <option value="zstandard" />
+          <option value="hyperopt" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

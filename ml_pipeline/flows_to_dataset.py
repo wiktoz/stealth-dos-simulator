@@ -5,6 +5,32 @@ from zat.log_to_dataframe import LogToDataFrame
 log_to_df = LogToDataFrame()
 base_dir = Path("../zeek_out")
 
+def add_labels():
+    attack_path = "container_results.json"  # change if needed
+
+    try:
+        # JSONL format (recommended)
+        attack_df = pd.read_json(attack_path, lines=True)
+    except ValueError:
+        # fallback: normal JSON array
+        attack_df = pd.read_json(attack_path)
+
+    ip_to_label = attack_df.set_index("ip")["attack_type"].to_dict()
+
+    df["label"] = df["id.orig_h"].map(ip_to_label)
+
+    df["label"] = df["label"].fillna(
+        df["id.resp_h"].map(ip_to_label)
+    )
+
+    df["label"] = df["label"].fillna("normal")
+
+    df["binary_label"] = (df["label"] != "normal").astype(int)
+
+    print("Done. Saved: dataset_labeled.csv")
+    print(df["label"].value_counts())
+    df.to_csv("dataset_labeled.csv", index=False)
+
 def load_log(folder_path, filename):
     path = folder_path / filename
 
